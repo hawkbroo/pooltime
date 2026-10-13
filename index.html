@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>POOL TIME CLUB — бильярд в Краснодаре</title>
+  <meta name="description" content="Бильярдный клуб Pool Time: столы, меню, скидки. Краснодар, ул. Российская, 79/4." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="promo-rail" id="promo-rail" aria-live="polite">
+    <div class="promo-rail__track" id="promo-track"></div>
+  </div>
+
+  <header class="top">
+    <a class="brand" href="#top">
+      <img src="img/logo.png?v=cut5" alt="POOL TIME CLUB" width="160" height="113" />
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#tables">Столы</a>
+      <a href="#menu">Меню</a>
+      <a href="#media">Фото / видео</a>
+      <a href="#promo">Скидки</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="top__actions">
+      <a class="btn btn--ghost" href="#contacts">Как добраться</a>
+      <a class="btn btn--primary" id="btn-call-top" href="tel:+79182395248">Позвонить</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="Меню" aria-expanded="false"><span></span></button>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero__copy">
+        <p class="eyebrow">Краснодар · Российская, 79/4</p>
+        <h1>POOL <span>TIME</span> CLUB</h1>
+        <p class="hero__lead" id="hero-tagline">POOLTIME — идеальный вечер в бильярдном клубе</p>
+        <div class="hero__meta">
+          <span id="hero-hours">Ежедневно · до 00:00</span>
+          <span id="hero-rating">4.5 на Яндекс Картах</span>
+          <span id="hero-price">Бильярд от 600 ₽/час</span>
+        </div>
+        <div class="hero__cta">
+          <a class="btn btn--primary" id="btn-wa" href="https://wa.me/79182395248" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn btn--max" id="btn-max" href="https://max.ru/" target="_blank" rel="noopener">MAX</a>
+          <a class="btn btn--ghost" id="btn-call" href="tel:+79182395248">Позвонить</a>
+        </div>
+      </div>
+      <div class="hero__badge" aria-hidden="true">
+        <img src="img/logo.png?v=cut5" alt="" />
+      </div>
+    </section>
+
+    <section class="section" id="promo">
+      <div class="section-head">
+        <p class="eyebrow">Акции</p>
+        <h2>Скидки</h2>
+      </div>
+      <div class="promo-card" id="promo-card">
+        <div class="promo-card__media" id="promo-media">
+          <div class="placeholder">Фото акции</div>
+        </div>
+        <div class="promo-card__body">
+          <p class="promo-card__label">Сейчас</p>
+          <p class="promo-card__text" id="promo-text">POOLTIME — идеальный вечер в бильярдном клубе</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tables">
+      <div class="section-head">
+        <p class="eyebrow">Игра</p>
+        <h2>Столы</h2>
+        <p class="section-lead" id="tables-note">Русский бильярд и американка</p>
+      </div>
+      <div class="price-pill" id="billiard-pill">
+        <span>Услуга игры</span>
+        <strong><em id="billiard-price">600</em> ₽ / час</strong>
+      </div>
+      <div class="cards" id="tables-grid"></div>
+    </section>
+
+    <section class="section" id="menu">
+      <div class="section-head">
+        <p class="eyebrow">Бар</p>
+        <h2>Меню</h2>
+      </div>
+      <div class="menu-tabs" id="menu-tabs" role="tablist"></div>
+      <div class="menu-panel" id="menu-panel"></div>
+      <p class="menu-note" id="menu-note">Со своей едой и напитками вход в клуб запрещён!</p>
+    </section>
+
+    <section class="section" id="media">
+      <div class="section-head">
+        <p class="eyebrow">Клуб</p>
+        <h2>Фото и видео</h2>
+        <p class="section-lead">Место под ваши кадры — загрузите в админке</p>
+      </div>
+      <div class="media-grid" id="media-grid"></div>
+    </section>
+
+    <section class="section section--contacts" id="contacts">
+      <div class="section-head">
+        <p class="eyebrow">Связь</p>
+        <h2>Контакты</h2>
+      </div>
+      <div class="contacts">
+        <div class="contacts__info">
+          <p><span>Адрес</span><a id="contact-address" href="https://yandex.ru/maps/-/CXBAMBNb" target="_blank" rel="noopener">г. Краснодар, ул. Российская, 79/4</a></p>
+          <p><span>Телефон</span><a id="contact-phone" href="tel:+79182395248">+7 (918) 239-52-48</a></p>
+          <p><span>Режим</span><strong id="contact-hours">Ежедневно · до 00:00</strong></p>
+          <div class="contacts__btns">
+            <a class="btn btn--primary" id="c-wa" href="https://wa.me/79182395248" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn btn--max" id="c-max" href="https://max.ru/" target="_blank" rel="noopener">MAX</a>
+            <a class="btn btn--ghost" id="c-call" href="tel:+79182395248">Звонок</a>
+            <a class="btn btn--ghost" id="c-maps" href="https://yandex.ru/maps/-/CXBAMBNb" target="_blank" rel="noopener">Карта</a>
+          </div>
+        </div>
+        <div class="contacts__map">
+          <iframe title="Pool Time на карте" src="https://yandex.ru/map-widget/v1/?ll=39.050367%2C45.035900&amp;z=16&amp;pt=39.050367,45.035900,pm2rdm&amp;l=map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <a class="map-fallback" href="https://yandex.ru/maps/-/CXBAMBNb" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <img src="img/logo.png?v=cut5" alt="" width="72" height="51" />
+    <p><strong>POOL TIME CLUB</strong> · Краснодар</p>
+    <p id="foot-phone">+7 (918) 239-52-48</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
