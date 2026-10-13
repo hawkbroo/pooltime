@@ -45,7 +45,7 @@ button, input, textarea, select { font: inherit; }
   gap: 3rem;
   white-space: nowrap;
   width: max-content;
-  animation: marquee 52s linear infinite;
+  animation: marquee 90s linear infinite;
   padding: 0.65rem 0;
   font-weight: 700;
   letter-spacing: 0.04em;
