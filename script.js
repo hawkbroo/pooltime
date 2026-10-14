@@ -24,6 +24,7 @@
 
   function renderPromoRail(data) {
     const track = $("#promo-track");
+    if (!track) return;
     const fallback = data.club.tagline || "POOLTIME — идеальный вечер в бильярдном клубе";
     const text = data.promo?.enabled && data.promo?.text?.trim()
       ? data.promo.text.trim()
@@ -35,6 +36,7 @@
   function renderPromoCard(data) {
     const media = $("#promo-media");
     const textEl = $("#promo-text");
+    if (!media || !textEl) return;
     const fallback = data.club.tagline || "POOLTIME — идеальный вечер в бильярдном клубе";
     const active = data.promo?.enabled && (data.promo?.text?.trim() || data.promo?.image);
     textEl.textContent = active && data.promo.text?.trim()
@@ -43,29 +45,31 @@
     if (active && data.promo.image) {
       media.innerHTML = `<img src="${esc(data.promo.image)}" alt="Акция" />`;
     } else {
-      media.innerHTML = `<div class="placeholder">${active ? "Фото акции" : "Скоро фото акции"}</div>`;
+      media.innerHTML = `<img src="img/gallery/photo-08.jpg" alt="Атмосфера клуба" />`;
     }
   }
 
   function renderTables(data) {
-    $("#billiard-price").textContent = data.billiard?.price ?? 600;
-    $("#tables-note").textContent = data.billiard?.note || "Русский бильярд и американка";
-    const grid = $("#tables-grid");
-    grid.innerHTML = (data.tables || []).map((t) => `
-      <article class="card">
-        <div class="card__media">
-          ${t.image
-            ? `<img src="${esc(t.image)}" alt="${esc(t.title)}" />`
-            : `<div class="placeholder">Фото стола</div>`}
-        </div>
-        <div class="card__body">${esc(t.title)}</div>
-      </article>
+    const price = $("#billiard-price");
+    const note = $("#tables-note");
+    if (price) price.textContent = data.billiard?.price ?? 400;
+    if (note) note.textContent = data.billiard?.note || "Русский бильярд и американка";
+
+    const types = $("#tables-types");
+    if (!types) return;
+    const list = (data.tables || [])
+      .map((t) => t.title)
+      .filter(Boolean);
+    const titles = list.length ? list : ["Русский бильярд", "Американка"];
+    types.innerHTML = titles.map((title) => `
+      <div class="tables-type">${esc(title)}</div>
     `).join("");
   }
 
   function renderMenu(data) {
     const tabs = $("#menu-tabs");
     const panel = $("#menu-panel");
+    if (!tabs || !panel) return;
     const cats = data.menu || [];
     if (!cats.length) {
       tabs.innerHTML = "";
@@ -92,22 +96,25 @@
         renderMenu(data);
       });
     });
-    $("#menu-note").textContent = data.notice || "";
+    const note = $("#menu-note");
+    if (note) note.textContent = data.notice || "Со своей едой и напитками вход в клуб запрещён!";
   }
 
   function renderMedia(data) {
     const grid = $("#media-grid");
-    grid.innerHTML = (data.gallery || []).map((g) => {
-      let media = `<div class="placeholder">${g.type === "video" ? "Место под видео" : "Место под фото"}</div>`;
+    if (!grid) return;
+    const items = (data.gallery || []).filter((g) => g.type !== "video" || g.image);
+    grid.innerHTML = items.map((g) => {
+      let media = `<div class="placeholder">Место под фото</div>`;
       if (g.image) {
         media = g.type === "video"
           ? `<video src="${esc(g.image)}" controls playsinline></video>`
-          : `<img src="${esc(g.image)}" alt="${esc(g.title)}" />`;
+          : `<img src="${esc(g.image)}" alt="${esc(g.title)}" loading="lazy" />`;
       }
       return `
         <article class="media-card">
           <div class="media-card__media">${media}</div>
-          <div class="media-card__body">${esc(g.title)}</div>
+          <div class="media-card__body">${esc(g.title || "Кадр")}</div>
         </article>
       `;
     }).join("");
@@ -116,18 +123,31 @@
   function renderContacts(data) {
     const c = data.club;
     const tel = phoneHref(c.phoneRaw || c.phone);
-    $("#hero-tagline").textContent = c.tagline;
-    $("#hero-hours").textContent = c.hours;
-    $("#hero-rating").textContent = c.rating;
-    $("#hero-price").textContent = `Бильярд от ${data.billiard?.price ?? 600} ₽/час`;
-    $("#contact-address").textContent = c.address;
-    $("#contact-address").href = c.maps;
-    $("#contact-phone").textContent = c.phone;
-    $("#contact-phone").href = tel;
-    $("#contact-hours").textContent = c.hours;
-    $("#foot-phone").textContent = c.phone;
+    const tag = $("#hero-tagline");
+    const hours = $("#hero-hours");
+    const rating = $("#hero-rating");
+    const price = $("#hero-price");
+    if (tag) tag.textContent = c.tagline;
+    if (hours) hours.textContent = c.hours;
+    if (rating) rating.textContent = c.rating;
+    if (price) price.textContent = `Бильярд от ${data.billiard?.price ?? 400} ₽/час`;
 
-    const mapLinks = [
+    const addr = $("#contact-address");
+    const phone = $("#contact-phone");
+    const ch = $("#contact-hours");
+    const foot = $("#foot-phone");
+    if (addr) {
+      addr.textContent = c.address;
+      addr.href = c.maps;
+    }
+    if (phone) {
+      phone.textContent = c.phone;
+      phone.href = tel;
+    }
+    if (ch) ch.textContent = c.hours;
+    if (foot) foot.textContent = c.phone;
+
+    [
       ["btn-call-top", tel],
       ["btn-call", tel],
       ["c-call", tel],
@@ -136,8 +156,7 @@
       ["btn-max", c.max],
       ["c-max", c.max],
       ["c-maps", c.maps],
-    ];
-    mapLinks.forEach(([id, href]) => {
+    ].forEach(([id, href]) => {
       const el = document.getElementById(id);
       if (el && href) el.href = href;
     });
@@ -165,6 +184,7 @@
 
   load().catch((err) => {
     console.error(err);
-    $("#promo-track").innerHTML = "<span>POOLTIME — идеальный вечер в бильярдном клубе</span>";
+    const track = $("#promo-track");
+    if (track) track.innerHTML = "<span>POOLTIME — идеальный вечер в бильярдном клубе</span>";
   });
 })();

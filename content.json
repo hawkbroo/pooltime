@@ -23,46 +23,18 @@
     "image": ""
   },
   "tables": [
-    {
-      "id": "t1",
-      "title": "Стол 1 · русский",
-      "image": ""
-    },
-    {
-      "id": "t2",
-      "title": "Стол 2 · русский",
-      "image": ""
-    },
-    {
-      "id": "t3",
-      "title": "Стол 3 · русский",
-      "image": ""
-    },
-    {
-      "id": "t4",
-      "title": "Стол 4 · пул",
-      "image": ""
-    }
+    { "id": "t1", "title": "Русский бильярд", "image": "" },
+    { "id": "t2", "title": "Американка", "image": "" }
   ],
   "gallery": [
-    {
-      "id": "g1",
-      "title": "Зал",
-      "image": "",
-      "type": "photo"
-    },
-    {
-      "id": "g2",
-      "title": "Атмосфера",
-      "image": "",
-      "type": "photo"
-    },
-    {
-      "id": "g3",
-      "title": "Видео клуба",
-      "image": "",
-      "type": "video"
-    }
+    { "id": "g1", "title": "Атмосферно", "image": "img/gallery/photo-01.jpg", "type": "photo" },
+    { "id": "g2", "title": "Уютно", "image": "img/gallery/photo-02.jpg", "type": "photo" },
+    { "id": "g3", "title": "Мягкий свет", "image": "img/gallery/photo-04.jpg", "type": "photo" },
+    { "id": "g4", "title": "Спокойно", "image": "img/gallery/photo-05.jpg", "type": "photo" },
+    { "id": "g5", "title": "Детали", "image": "img/gallery/photo-06.jpg", "type": "photo" },
+    { "id": "g6", "title": "Американка", "image": "img/gallery/photo-07.jpg", "type": "photo" },
+    { "id": "g7", "title": "Качественный материал", "image": "img/gallery/photo-08.jpg", "type": "photo" },
+    { "id": "g8", "title": "Русский", "image": "img/gallery/photo-03.jpg", "type": "photo" }
   ],
   "menu": [
     {
