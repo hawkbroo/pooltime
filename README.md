@@ -26,4 +26,7 @@ py -3 serve.py
 
 ## Хостинг
 
-Для РФ удобно Beget (обычный PHP/static или Python). Cloudflare/`workers.dev` для РФ лучше не использовать.
+GitHub Pages: `https://hawkbroo.github.io/pooltime/`  
+(файлы должны лежать в корне репо, не во вложенной папке `pooltime/`)
+
+Для РФ удобно Beget. Cloudflare/`workers.dev` для РФ лучше не использовать.

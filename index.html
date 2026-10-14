@@ -12,19 +12,15 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="promo-rail" id="promo-rail" aria-live="polite">
-    <div class="promo-rail__track" id="promo-track"></div>
-  </div>
-
   <header class="top">
     <a class="brand" href="#top">
-      <img src="img/logo.png?v=cut5" alt="POOL TIME CLUB" width="160" height="113" />
+      <img src="img/logo.png?v=edge2" alt="POOL TIME CLUB" width="160" height="113" />
     </a>
     <nav class="nav" id="nav">
       <a href="#tables">Столы</a>
       <a href="#menu">Меню</a>
       <a href="#media">Фото / видео</a>
-      <a href="#promo">Скидки</a>
+      <a href="#promo">Акции</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <div class="top__actions">
@@ -36,6 +32,7 @@
 
   <main id="top">
     <section class="hero">
+      <div class="hero__atmosphere" aria-hidden="true"></div>
       <div class="hero__copy">
         <p class="eyebrow">Краснодар · Российская, 79/4</p>
         <h1>POOL <span>TIME</span> CLUB</h1>
@@ -52,40 +49,30 @@
         </div>
       </div>
       <div class="hero__badge" aria-hidden="true">
-        <img src="img/logo.png?v=cut5" alt="" />
+        <img src="img/logo.png?v=edge2" alt="" />
       </div>
     </section>
 
-    <section class="section" id="promo">
-      <div class="section-head">
-        <p class="eyebrow">Акции</p>
-        <h2>Скидки</h2>
-      </div>
-      <div class="promo-card" id="promo-card">
-        <div class="promo-card__media" id="promo-media">
-          <div class="placeholder">Фото акции</div>
-        </div>
-        <div class="promo-card__body">
-          <p class="promo-card__label">Сейчас</p>
-          <p class="promo-card__text" id="promo-text">POOLTIME — идеальный вечер в бильярдном клубе</p>
-        </div>
-      </div>
-    </section>
+    <div class="promo-rail" id="promo-rail" aria-live="polite">
+      <div class="promo-rail__track" id="promo-track"></div>
+    </div>
 
-    <section class="section" id="tables">
-      <div class="section-head">
-        <p class="eyebrow">Игра</p>
-        <h2>Столы</h2>
-        <p class="section-lead" id="tables-note">Русский бильярд и американка</p>
-      </div>
-      <div class="price-pill" id="billiard-pill">
-        <span>Услуга игры</span>
-        <strong><em id="billiard-price">600</em> ₽ / час</strong>
+    <section class="section section--tables" id="tables">
+      <div class="section-head section-head--row">
+        <div>
+          <p class="eyebrow">Игра</p>
+          <h2>Столы</h2>
+          <p class="section-lead" id="tables-note">Русский бильярд и американка</p>
+        </div>
+        <div class="price-pill" id="billiard-pill">
+          <span>Услуга игры</span>
+          <strong><em id="billiard-price">600</em> ₽ / час</strong>
+        </div>
       </div>
       <div class="cards" id="tables-grid"></div>
     </section>
 
-    <section class="section" id="menu">
+    <section class="section section--menu" id="menu">
       <div class="section-head">
         <p class="eyebrow">Бар</p>
         <h2>Меню</h2>
@@ -95,11 +82,23 @@
       <p class="menu-note" id="menu-note">Со своей едой и напитками вход в клуб запрещён!</p>
     </section>
 
-    <section class="section" id="media">
+    <section class="section section--promo" id="promo">
+      <div class="promo-card" id="promo-card">
+        <div class="promo-card__media" id="promo-media">
+          <div class="placeholder">Фото акции</div>
+        </div>
+        <div class="promo-card__body">
+          <p class="promo-card__label">Акция</p>
+          <p class="promo-card__text" id="promo-text">POOLTIME — идеальный вечер в бильярдном клубе</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--media" id="media">
       <div class="section-head">
         <p class="eyebrow">Клуб</p>
         <h2>Фото и видео</h2>
-        <p class="section-lead">Место под ваши кадры — загрузите в админке</p>
+        <p class="section-lead">Атмосфера зала — загрузите кадры в админке</p>
       </div>
       <div class="media-grid" id="media-grid"></div>
     </section>
@@ -130,7 +129,7 @@
   </main>
 
   <footer class="foot">
-    <img src="img/logo.png?v=cut5" alt="" width="72" height="51" />
+    <img src="img/logo.png?v=edge2" alt="" width="72" height="51" />
     <p><strong>POOL TIME CLUB</strong> · Краснодар</p>
     <p id="foot-phone">+7 (918) 239-52-48</p>
   </footer>

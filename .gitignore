@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+uploads/promo/*
+uploads/tables/*
+!uploads/promo/.gitkeep
+!uploads/tables/.gitkeep
+img/logo-alt.png
+img/logo-clean-src.png
+img/logo-from-raw.png
+img/logo-raw.png
+img/_*.png
+img/*preview*
