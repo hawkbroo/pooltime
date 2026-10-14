@@ -148,9 +148,9 @@
     if (foot) foot.textContent = c.phone;
 
     [
-      ["btn-call-top", tel],
       ["btn-call", tel],
       ["c-call", tel],
+      ["btn-book-top", c.whatsapp],
       ["btn-wa", c.whatsapp],
       ["c-wa", c.whatsapp],
       ["btn-max", c.max],
