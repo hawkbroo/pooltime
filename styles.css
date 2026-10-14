@@ -256,22 +256,24 @@ h1, h2, h3 {
   min-height: 44px;
   display: flex;
   align-items: center;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .promo-rail__track {
   display: flex;
   gap: 3rem;
   white-space: nowrap;
   width: max-content;
-  animation: marquee 90s linear infinite;
   padding: 0.7rem 0;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 0.82rem;
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .tables-row {

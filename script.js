@@ -22,6 +22,44 @@
     return digits ? `tel:+${digits}` : "#";
   }
 
+  const marquee = {
+    track: null,
+    x: 0,
+    raf: 0,
+    last: 0,
+    reduced: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  };
+
+  function stopMarquee() {
+    if (marquee.raf) cancelAnimationFrame(marquee.raf);
+    marquee.raf = 0;
+    marquee.last = 0;
+  }
+
+  function tickMarquee(now) {
+    const track = marquee.track;
+    if (!track || marquee.reduced) return;
+    if (!marquee.last) marquee.last = now;
+    const dt = Math.min(32, now - marquee.last);
+    marquee.last = now;
+    // ~38px/sec — заметное движение и на телефоне
+    marquee.x -= (38 * dt) / 1000;
+    const half = track.scrollWidth / 2;
+    if (half > 0 && -marquee.x >= half) marquee.x += half;
+    track.style.transform = `translate3d(${marquee.x}px,0,0)`;
+    marquee.raf = requestAnimationFrame(tickMarquee);
+  }
+
+  function startMarquee(track) {
+    if (!track) return;
+    marquee.track = track;
+    marquee.x = 0;
+    track.style.transform = "translate3d(0,0,0)";
+    stopMarquee();
+    if (marquee.reduced) return;
+    marquee.raf = requestAnimationFrame(tickMarquee);
+  }
+
   function renderPromoRail(data) {
     const track = $("#promo-track");
     if (!track) return;
@@ -31,6 +69,7 @@
       : fallback;
     const bits = Array(8).fill(`<span>${esc(text)}</span>`).join("");
     track.innerHTML = bits + bits;
+    startMarquee(track);
   }
 
   function renderPromoCard(data) {
@@ -125,11 +164,9 @@
     const tel = phoneHref(c.phoneRaw || c.phone);
     const tag = $("#hero-tagline");
     const hours = $("#hero-hours");
-    const rating = $("#hero-rating");
     const price = $("#hero-price");
     if (tag) tag.textContent = c.tagline;
     if (hours) hours.textContent = c.hours;
-    if (rating) rating.textContent = c.rating;
     if (price) price.textContent = `Бильярд от ${data.billiard?.price ?? 400} ₽/час`;
 
     const addr = $("#contact-address");
@@ -204,9 +241,26 @@
     playMark.classList.add("is-on");
   }
 
+  const promoTrack = $("#promo-track");
+  if (promoTrack) {
+    if (promoTrack.children.length && promoTrack.children.length < 12) {
+      promoTrack.innerHTML = promoTrack.innerHTML + promoTrack.innerHTML;
+    }
+    startMarquee(promoTrack);
+    window.addEventListener("pageshow", () => startMarquee(promoTrack));
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopMarquee();
+      else startMarquee(marquee.track || promoTrack);
+    });
+  }
+
   load().catch((err) => {
     console.error(err);
     const track = $("#promo-track");
-    if (track) track.innerHTML = "<span>POOLTIME — идеальный вечер в бильярдном клубе</span>";
+    if (track) {
+      const bits = Array(8).fill("<span>POOLTIME — идеальный вечер в бильярдном клубе</span>").join("");
+      track.innerHTML = bits + bits;
+      startMarquee(track);
+    }
   });
 })();
