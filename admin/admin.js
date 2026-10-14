@@ -69,13 +69,29 @@
     }
   }
 
+  function apiUrl(path) {
+    // /admin/ → /api/... ; /pooltime/admin/ → /pooltime/api/...
+    const base = location.pathname.replace(/\/admin\/?$/, "") || "";
+    return `${base}${path}`;
+  }
+
+  function isStaticHost() {
+    return /github\.io$/i.test(location.hostname) || location.protocol === "file:";
+  }
+
   async function upload(file, folder) {
+    if (isStaticHost()) {
+      throw new Error("На GitHub Pages загрузка не работает. Открой админку через http://127.0.0.1:5560/admin/");
+    }
     const fd = new FormData();
-    fd.append("file", file);
     fd.append("folder", folder);
-    const res = await fetch("/api/upload", { method: "POST", body: fd });
-    if (!res.ok) throw new Error("upload failed");
-    const json = await res.json();
+    fd.append("file", file);
+    const res = await fetch(apiUrl("/api/upload"), { method: "POST", body: fd });
+    let json = null;
+    try { json = await res.json(); } catch { /* ignore */ }
+    if (!res.ok || !json?.path) {
+      throw new Error(json?.error || `ошибка ${res.status}`);
+    }
     return json.path;
   }
 
@@ -102,8 +118,8 @@
           data.tables[i].image = await upload(file, "tables");
           renderTables();
           status("Фото стола загружено", true);
-        } catch {
-          status("Ошибка загрузки. Запустите serve.py", false);
+        } catch (err) {
+          status("Ошибка загрузки: " + (err.message || "запустите py serve.py"), false);
         }
       });
     });
@@ -129,11 +145,11 @@
         const file = e.target.files?.[0];
         if (!file) return;
         try {
-          data.gallery[i].image = await upload(file, "promo");
+          data.gallery[i].image = await upload(file, "gallery");
           renderGallery();
           status("Медиа загружено", true);
-        } catch {
-          status("Ошибка загрузки. Запустите serve.py", false);
+        } catch (err) {
+          status("Ошибка загрузки: " + (err.message || "запустите py serve.py"), false);
         }
       });
     });
@@ -201,8 +217,8 @@
       data.promo.image = await upload(file, "promo");
       renderPromoPreview();
       status("Фото акции загружено", true);
-    } catch {
-      status("Ошибка загрузки. Запустите serve.py", false);
+    } catch (err) {
+      status("Ошибка загрузки: " + (err.message || "запустите py serve.py"), false);
     }
   });
 
@@ -228,16 +244,22 @@
 
   $("save").addEventListener("click", async () => {
     collect();
+    if (isStaticHost()) {
+      status("На GitHub Pages сохранить нельзя. Открой http://127.0.0.1:5560/admin/", false);
+      return;
+    }
     try {
-      const res = await fetch("/api/save", {
+      const res = await fetch(apiUrl("/api/save"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("save failed");
+      let json = null;
+      try { json = await res.json(); } catch { /* ignore */ }
+      if (!res.ok) throw new Error(json?.error || `ошибка ${res.status}`);
       status("Сохранено ✓", true);
-    } catch {
-      status("Не удалось сохранить. Запустите: py serve.py", false);
+    } catch (err) {
+      status("Не удалось сохранить: " + (err.message || "запустите py serve.py"), false);
     }
   });
 

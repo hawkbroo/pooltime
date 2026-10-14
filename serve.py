@@ -55,40 +55,60 @@ class Handler(SimpleHTTPRequestHandler):
         except Exception as e:
             self._json(400, {"ok": False, "error": str(e)})
 
+    def _parse_multipart(self, body: bytes, boundary: str):
+        boundary = boundary.strip().strip('"')
+        sep = b"--" + boundary.encode("utf-8", errors="ignore")
+        fields: dict[str, str] = {}
+        file_bytes = None
+        filename = "upload.bin"
+
+        for raw in body.split(sep):
+            if not raw or raw in (b"--", b"--\r\n"):
+                continue
+            if raw.startswith(b"--"):
+                continue
+            if raw.startswith(b"\r\n"):
+                raw = raw[2:]
+            if raw.endswith(b"\r\n"):
+                raw = raw[:-2]
+            head, sep2, content = raw.partition(b"\r\n\r\n")
+            if not sep2:
+                continue
+            head_txt = head.decode("utf-8", errors="ignore")
+            if "Content-Disposition" not in head_txt:
+                continue
+            name_m = re.search(r'name="([^"]+)"', head_txt)
+            if not name_m:
+                continue
+            name = name_m.group(1)
+            if name == "file":
+                fn = re.search(r'filename="([^"]*)"', head_txt)
+                if fn and fn.group(1):
+                    filename = unquote(fn.group(1))
+                file_bytes = content
+            else:
+                fields[name] = content.decode("utf-8", errors="ignore").strip()
+        return fields, file_bytes, filename
+
     def _upload(self):
         try:
             content_type = self.headers.get("Content-Type", "")
             if "multipart/form-data" not in content_type:
                 return self._json(400, {"ok": False, "error": "expected multipart"})
 
-            boundary = content_type.split("boundary=")[-1].strip()
+            boundary = content_type.split("boundary=", 1)[-1].strip()
             body = self._read_body()
-            parts = body.split(f"--{boundary}".encode())
-            file_bytes = None
-            filename = "upload.bin"
-            folder = "promo"
-
-            for part in parts:
-                if b"Content-Disposition" not in part:
-                    continue
-                head, _, content = part.partition(b"\r\n\r\n")
-                content = content.rstrip(b"\r\n--")
-                head_txt = head.decode("utf-8", errors="ignore")
-                if 'name="folder"' in head_txt:
-                    folder = content.decode("utf-8", errors="ignore").strip() or "promo"
-                if 'name="file"' in head_txt:
-                    m = re.search(r'filename="([^"]+)"', head_txt)
-                    if m:
-                        filename = unquote(m.group(1))
-                    file_bytes = content
+            fields, file_bytes, filename = self._parse_multipart(body, boundary)
 
             if not file_bytes:
                 return self._json(400, {"ok": False, "error": "no file"})
 
-            folder = re.sub(r"[^a-zA-Z0-9_-]", "", folder) or "promo"
+            folder = re.sub(r"[^a-zA-Z0-9_-]", "", fields.get("folder", "promo")) or "promo"
             dest_dir = UPLOADS / folder
             dest_dir.mkdir(parents=True, exist_ok=True)
             ext = Path(filename).suffix.lower()[:8] or ".bin"
+            if ext not in {".jpg", ".jpeg", ".png", ".webp", ".gif", ".mp4", ".webm", ".bin"}:
+                ext = ".bin"
             name = f"{uuid.uuid4().hex}{ext}"
             path = dest_dir / name
             path.write_bytes(file_bytes)
@@ -105,6 +125,7 @@ def main():
     UPLOADS.mkdir(parents=True, exist_ok=True)
     (UPLOADS / "tables").mkdir(exist_ok=True)
     (UPLOADS / "promo").mkdir(exist_ok=True)
+    (UPLOADS / "gallery").mkdir(exist_ok=True)
     mimetypes.add_type("application/javascript", ".js")
     server = ThreadingHTTPServer((HOST, PORT), Handler)
     print(f"POOL TIME http://{HOST}:{PORT}/")

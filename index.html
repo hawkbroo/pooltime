@@ -8,27 +8,23 @@
   <meta name="description" content="Бильярдный клуб Pool Time: столы, меню, акции. Краснодар, ул. Российская, 79/4." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=hybrid4" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=cine2" />
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
-
   <header class="top" id="header">
     <a class="brand" href="#top">
-      <img src="img/logo.png?v=edge2" alt="POOL TIME CLUB" width="160" height="113" />
+      <img src="img/logo.png?v=edge2" alt="" width="44" height="31" />
+      <span>POOL TIME</span>
     </a>
     <nav class="nav" id="nav">
+      <a href="#atmosphere">Атмосфера</a>
       <a href="#tables">Столы</a>
       <a href="#menu">Меню</a>
-      <a href="#media">Фото</a>
-      <a href="#promo">Акции</a>
+      <a href="#gallery">Галерея</a>
       <a href="#contacts">Контакты</a>
     </nav>
-    <div class="top__actions">
-      <a class="btn btn--ghost top__map" href="#contacts">Как добраться</a>
-      <a class="btn btn--primary" id="btn-book-top" href="https://wa.me/79182395248" target="_blank" rel="noopener">Запись</a>
-    </div>
+    <a class="btn btn--solid top__book" id="btn-book-top" href="https://wa.me/79182395248" target="_blank" rel="noopener">Запись</a>
     <button class="nav-toggle" type="button" aria-label="Меню" aria-expanded="false"><span></span></button>
   </header>
 
@@ -37,47 +33,63 @@
       <div class="hero__photo" aria-hidden="true">
         <img src="img/gallery/hero.jpg?v=2" alt="" fetchpriority="high" />
       </div>
-      <div class="hero__grade" aria-hidden="true"></div>
-      <div class="hero__inner">
-        <div class="hero__copy">
-          <p class="eyebrow">Краснодар · Российская, 79/4</p>
-          <h1>POOL <span>TIME</span> CLUB</h1>
-          <p class="hero__lead" id="hero-tagline">POOLTIME — идеальный вечер в бильярдном клубе</p>
-          <div class="hero__meta">
-            <span id="hero-hours">Ежедневно · до 00:00</span>
-            <span id="hero-rating">4.5 на Яндекс Картах</span>
-            <span id="hero-price">Бильярд от 400 ₽/час</span>
-          </div>
-          <div class="hero__cta">
-            <a class="btn btn--primary" id="btn-wa" href="https://wa.me/79182395248" target="_blank" rel="noopener">WhatsApp</a>
-            <a class="btn btn--max" id="btn-max" href="https://max.ru/" target="_blank" rel="noopener">MAX</a>
-            <a class="btn btn--ghost" id="btn-call" href="tel:+79182395248">Позвонить</a>
-          </div>
-        </div>
-        <div class="hero__badge" aria-hidden="true">
-          <img src="img/logo.png?v=edge2" alt="" />
+      <div class="hero__veil" aria-hidden="true"></div>
+      <div class="hero__copy">
+        <img class="hero__logo" src="img/logo.png?v=edge2" alt="POOL TIME CLUB" width="200" height="141" />
+        <p class="hero__place">Краснодар · Российская, 79/4</p>
+        <h1 class="hero__brand">POOL<br />TIME<br /><em>CLUB</em></h1>
+        <p class="hero__lead" id="hero-tagline" hidden>POOLTIME — идеальный вечер в бильярдном клубе</p>
+        <div class="hero__cta">
+          <a class="btn btn--solid" id="btn-wa" href="https://wa.me/79182395248" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn btn--line" id="btn-max" href="https://max.ru/" target="_blank" rel="noopener">MAX</a>
+          <a class="btn btn--line" id="btn-call" href="tel:+79182395248">Позвонить</a>
         </div>
       </div>
-      <div class="promo-rail" id="promo-rail" aria-live="polite">
-        <div class="promo-rail__track" id="promo-track"></div>
+      <a class="hero__scroll" href="#atmosphere" aria-label="Дальше">
+        <span></span>
+      </a>
+    </section>
+
+    <section class="strip" id="atmosphere" aria-label="Атмосфера">
+      <figure class="strip__shot">
+        <img src="img/gallery/photo-01.jpg" alt="Зал клуба" loading="lazy" />
+      </figure>
+      <figure class="strip__shot strip__shot--tall">
+        <img src="img/gallery/photo-02.jpg" alt="Стол крупным планом" loading="lazy" />
+      </figure>
+      <figure class="strip__shot">
+        <img src="img/gallery/photo-04.jpg" alt="Свет над сукном" loading="lazy" />
+      </figure>
+      <div class="strip__aside">
+        <p class="eyebrow">Атмосфера</p>
+        <h2>Тихий зал.<br />Мягкий свет.<br />Своя партия.</h2>
+        <p class="strip__text">Русский бильярд и американка — без суеты, в клубе на Российской.</p>
       </div>
     </section>
 
     <section class="section section--tables" id="tables">
-      <div class="section-head section-head--row">
-        <div>
+      <div class="tables-hero">
+        <img src="img/gallery/photo-03.jpg" alt="Русский бильярд" loading="lazy" />
+        <div class="tables-hero__panel">
           <p class="eyebrow">Игра</p>
           <h2>Столы</h2>
           <p class="section-lead" id="tables-note">Русский бильярд и американка</p>
-        </div>
-        <div class="price-pill" id="billiard-pill">
-          <span>Услуга игры</span>
-          <strong><em id="billiard-price">400</em> ₽ / час</strong>
+          <p class="tables-price">
+            <span>Услуга игры</span>
+            <strong><em id="billiard-price">400</em> ₽ / час</strong>
+          </p>
+          <div class="tables-types" id="tables-types"></div>
         </div>
       </div>
-      <div class="tables-types" id="tables-types">
-        <div class="tables-type">Русский бильярд</div>
-        <div class="tables-type">Американка</div>
+      <div class="tables-pair">
+        <figure>
+          <img src="img/gallery/photo-07.jpg" alt="Американка" loading="lazy" />
+          <figcaption>Американка</figcaption>
+        </figure>
+        <figure>
+          <img src="img/gallery/photo-08.jpg" alt="Русский бильярд" loading="lazy" />
+          <figcaption>Русский бильярд</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -92,24 +104,23 @@
     </section>
 
     <section class="section section--promo" id="promo">
-      <div class="promo-card" id="promo-card">
-        <div class="promo-card__media" id="promo-media">
-          <div class="placeholder">Фото акции</div>
+      <div class="promo-band" id="promo-card">
+        <div class="promo-band__media" id="promo-media">
+          <img src="img/gallery/photo-05.jpg" alt="" loading="lazy" />
         </div>
-        <div class="promo-card__body">
-          <p class="promo-card__label">Акция</p>
-          <p class="promo-card__text" id="promo-text">POOLTIME — идеальный вечер в бильярдном клубе</p>
+        <div class="promo-band__body">
+          <p class="eyebrow">Акция</p>
+          <p class="promo-band__text" id="promo-text">POOLTIME — идеальный вечер в бильярдном клубе</p>
         </div>
       </div>
     </section>
 
-    <section class="section section--media" id="media">
-      <div class="section-head">
+    <section class="gallery" id="gallery">
+      <div class="gallery__head">
         <p class="eyebrow">Клуб</p>
-        <h2>Фото</h2>
-        <p class="section-lead">Атмосфера зала</p>
+        <h2>Галерея</h2>
       </div>
-      <div class="media-grid" id="media-grid"></div>
+      <div class="gallery__grid" id="media-grid"></div>
     </section>
 
     <section class="section section--contacts" id="contacts">
@@ -122,11 +133,12 @@
           <p><span>Адрес</span><a id="contact-address" href="https://yandex.ru/maps/-/CXBAMBNb" target="_blank" rel="noopener">г. Краснодар, ул. Российская, 79/4</a></p>
           <p><span>Телефон</span><a id="contact-phone" href="tel:+79182395248">+7 (918) 239-52-48</a></p>
           <p><span>Режим</span><strong id="contact-hours">Ежедневно · до 00:00</strong></p>
+          <p><span>Оценка</span><strong id="contact-rating">4.5 на Яндекс Картах</strong></p>
           <div class="contacts__btns">
-            <a class="btn btn--primary" id="c-wa" href="https://wa.me/79182395248" target="_blank" rel="noopener">WhatsApp</a>
-            <a class="btn btn--max" id="c-max" href="https://max.ru/" target="_blank" rel="noopener">MAX</a>
-            <a class="btn btn--ghost" id="c-call" href="tel:+79182395248">Звонок</a>
-            <a class="btn btn--ghost" id="c-maps" href="https://yandex.ru/maps/-/CXBAMBNb" target="_blank" rel="noopener">Карта</a>
+            <a class="btn btn--solid" id="c-wa" href="https://wa.me/79182395248" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn btn--line" id="c-max" href="https://max.ru/" target="_blank" rel="noopener">MAX</a>
+            <a class="btn btn--line" id="c-call" href="tel:+79182395248">Звонок</a>
+            <a class="btn btn--line" id="c-maps" href="https://yandex.ru/maps/-/CXBAMBNb" target="_blank" rel="noopener">Карта</a>
           </div>
         </div>
         <div class="contacts__map">
@@ -138,11 +150,11 @@
   </main>
 
   <footer class="foot">
-    <img src="img/logo.png?v=edge2" alt="" width="72" height="51" />
+    <img src="img/logo.png?v=edge2" alt="" width="56" height="40" />
     <p><strong>POOL TIME CLUB</strong> · Краснодар</p>
     <p id="foot-phone">+7 (918) 239-52-48</p>
   </footer>
 
-  <script src="script.js?v=hybrid4"></script>
+  <script src="script.js?v=cine2"></script>
 </body>
 </html>

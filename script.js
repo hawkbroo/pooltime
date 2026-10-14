@@ -22,20 +22,10 @@
     return digits ? `tel:+${digits}` : "#";
   }
 
-  function renderPromoRail(data) {
-    const track = $("#promo-track");
-    if (!track) return;
-    const fallback = data.club.tagline || "POOLTIME — идеальный вечер в бильярдном клубе";
-    const text = data.promo?.enabled && data.promo?.text?.trim()
-      ? data.promo.text.trim()
-      : fallback;
-    const bits = Array(8).fill(`<span>${esc(text)}</span>`).join("");
-    track.innerHTML = bits + bits;
-  }
-
   function renderPromoCard(data) {
     const media = $("#promo-media");
     const textEl = $("#promo-text");
+    const section = $("#promo");
     if (!media || !textEl) return;
     const fallback = data.club.tagline || "POOLTIME — идеальный вечер в бильярдном клубе";
     const active = data.promo?.enabled && (data.promo?.text?.trim() || data.promo?.image);
@@ -45,8 +35,9 @@
     if (active && data.promo.image) {
       media.innerHTML = `<img src="${esc(data.promo.image)}" alt="Акция" />`;
     } else {
-      media.innerHTML = `<img src="img/gallery/photo-08.jpg" alt="Атмосфера клуба" />`;
+      media.innerHTML = `<img src="img/gallery/photo-05.jpg" alt="Атмосфера клуба" loading="lazy" />`;
     }
+    if (section) section.hidden = data.promo?.enabled === false;
   }
 
   function renderTables(data) {
@@ -57,9 +48,7 @@
 
     const types = $("#tables-types");
     if (!types) return;
-    const list = (data.tables || [])
-      .map((t) => t.title)
-      .filter(Boolean);
+    const list = (data.tables || []).map((t) => t.title).filter(Boolean);
     const titles = list.length ? list : ["Русский бильярд", "Американка"];
     types.innerHTML = titles.map((title) => `
       <div class="tables-type">${esc(title)}</div>
@@ -73,7 +62,7 @@
     const cats = data.menu || [];
     if (!cats.length) {
       tabs.innerHTML = "";
-      panel.innerHTML = "<p style='padding:1rem;color:#a3b3a8'>Меню пока пустое</p>";
+      panel.innerHTML = "<p style='padding:1rem;color:#9aa098'>Меню пока пустое</p>";
       return;
     }
     if (state.menuTab >= cats.length) state.menuTab = 0;
@@ -103,38 +92,45 @@
   function renderMedia(data) {
     const grid = $("#media-grid");
     if (!grid) return;
-    const items = (data.gallery || []).filter((g) => g.type !== "video" || g.image);
-    grid.innerHTML = items.map((g) => {
-      let media = `<div class="placeholder">Место под фото</div>`;
-      if (g.image) {
-        media = g.type === "video"
-          ? `<video src="${esc(g.image)}" controls playsinline></video>`
-          : `<img src="${esc(g.image)}" alt="${esc(g.title)}" loading="lazy" />`;
-      }
-      return `
-        <article class="media-card">
-          <div class="media-card__media">${media}</div>
-          <div class="media-card__body">${esc(g.title || "Кадр")}</div>
-        </article>
-      `;
-    }).join("");
+    const items = (data.gallery || []).filter((g) => g.type !== "video" && g.image);
+    grid.innerHTML = items.map((g, i) => `
+      <article class="gallery__item" style="transition-delay:${(i % 4) * 0.08}s">
+        <img src="${esc(g.image)}" alt="${esc(g.title || "Кадр")}" loading="lazy" />
+        <div class="gallery__caption">${esc(g.title || "Кадр")}</div>
+      </article>
+    `).join("");
+    observeGallery();
+  }
+
+  function observeGallery() {
+    const nodes = document.querySelectorAll(".gallery__item");
+    if (!nodes.length) return;
+    if (!("IntersectionObserver" in window)) {
+      nodes.forEach((n) => n.classList.add("is-in"));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("is-in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    nodes.forEach((n) => io.observe(n));
   }
 
   function renderContacts(data) {
     const c = data.club;
     const tel = phoneHref(c.phoneRaw || c.phone);
     const tag = $("#hero-tagline");
-    const hours = $("#hero-hours");
-    const rating = $("#hero-rating");
-    const price = $("#hero-price");
-    if (tag) tag.textContent = c.tagline;
-    if (hours) hours.textContent = c.hours;
-    if (rating) rating.textContent = c.rating;
-    if (price) price.textContent = `Бильярд от ${data.billiard?.price ?? 400} ₽/час`;
+    // tagline hidden on site; keep text in JSON for admin/promo fallbacks
+    if (tag) tag.textContent = c.tagline || "";
 
     const addr = $("#contact-address");
     const phone = $("#contact-phone");
     const ch = $("#contact-hours");
+    const rating = $("#contact-rating");
     const foot = $("#foot-phone");
     if (addr) {
       addr.textContent = c.address;
@@ -145,6 +141,7 @@
       phone.href = tel;
     }
     if (ch) ch.textContent = c.hours;
+    if (rating) rating.textContent = c.rating;
     if (foot) foot.textContent = c.phone;
 
     [
@@ -152,8 +149,8 @@
       ["c-call", tel],
       ["btn-book-top", c.whatsapp],
       ["btn-wa", c.whatsapp],
-      ["c-wa", c.whatsapp],
       ["btn-max", c.max],
+      ["c-wa", c.whatsapp],
       ["c-max", c.max],
       ["c-maps", c.maps],
     ].forEach(([id, href]) => {
@@ -164,7 +161,6 @@
 
   function render() {
     const data = state.data;
-    renderPromoRail(data);
     renderPromoCard(data);
     renderTables(data);
     renderMenu(data);
@@ -182,9 +178,13 @@
     a.addEventListener("click", () => top.classList.remove("is-open"));
   });
 
+  const onScroll = () => {
+    top?.classList.toggle("is-scrolled", window.scrollY > 40);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+
   load().catch((err) => {
     console.error(err);
-    const track = $("#promo-track");
-    if (track) track.innerHTML = "<span>POOLTIME — идеальный вечер в бильярдном клубе</span>";
   });
 })();
