@@ -18,22 +18,70 @@
   },
   "promo": {
     "enabled": true,
-    "text": "здесь будет акция, если ее нет, то текст по умолчанию",
-    "image": ""
+    "text": "Скидка 10% на игру: день рождения, дети до 16, пенсионеры и участники СВО · Российская, 79/4",
+    "image": "img/promo/discount-10.jpg"
   },
   "tables": [
-    { "id": "t1", "title": "Русский бильярд", "image": "" },
-    { "id": "t2", "title": "Американка", "image": "" }
+    {
+      "id": "t1",
+      "title": "Русский бильярд",
+      "image": ""
+    },
+    {
+      "id": "t2",
+      "title": "Американка",
+      "image": ""
+    }
   ],
   "gallery": [
-    { "id": "g1", "title": "Атмосферно", "image": "img/gallery/photo-01.jpg", "type": "photo" },
-    { "id": "g2", "title": "Уютно", "image": "img/gallery/photo-02.jpg", "type": "photo" },
-    { "id": "g3", "title": "Мягкий свет", "image": "img/gallery/photo-04.jpg", "type": "photo" },
-    { "id": "g4", "title": "Спокойно", "image": "img/gallery/photo-05.jpg", "type": "photo" },
-    { "id": "g5", "title": "Детали", "image": "img/gallery/photo-06.jpg", "type": "photo" },
-    { "id": "g6", "title": "Американка", "image": "img/gallery/photo-07.jpg", "type": "photo" },
-    { "id": "g7", "title": "Качественный материал", "image": "img/gallery/photo-08.jpg", "type": "photo" },
-    { "id": "g8", "title": "Русский", "image": "img/gallery/photo-03.jpg", "type": "photo" }
+    {
+      "id": "g1",
+      "title": "Атмосферно",
+      "image": "img/gallery/photo-01.jpg",
+      "type": "photo"
+    },
+    {
+      "id": "g2",
+      "title": "Уютно",
+      "image": "img/gallery/photo-02.jpg",
+      "type": "photo"
+    },
+    {
+      "id": "g3",
+      "title": "Мягкий свет",
+      "image": "img/gallery/photo-04.jpg",
+      "type": "photo"
+    },
+    {
+      "id": "g4",
+      "title": "Спокойно",
+      "image": "img/gallery/photo-05.jpg",
+      "type": "photo"
+    },
+    {
+      "id": "g5",
+      "title": "Детали",
+      "image": "img/gallery/photo-06.jpg",
+      "type": "photo"
+    },
+    {
+      "id": "g6",
+      "title": "Американка",
+      "image": "img/gallery/photo-07.jpg",
+      "type": "photo"
+    },
+    {
+      "id": "g7",
+      "title": "Качественный материал",
+      "image": "img/gallery/photo-08.jpg",
+      "type": "photo"
+    },
+    {
+      "id": "g8",
+      "title": "Русский",
+      "image": "img/gallery/photo-03.jpg",
+      "type": "photo"
+    }
   ],
   "menu": [
     {
